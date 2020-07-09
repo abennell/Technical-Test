@@ -20,6 +20,7 @@ I asked these questions in a response to the technical test but given the timesc
 - 500ms is an acceptable time Non Functional Requirement (NFR) for the api to return in
 - The language and tools used to complete the test are left to my discretion.
 
+
 ## Additional Questions/Observations
 
 
@@ -28,10 +29,19 @@ I asked these questions in a response to the technical test but given the timesc
 - Is it the intended behaviour for the API to return user data without being authenticated? Typically, Personal Data is subejct to increased levels of protection and it's unusual to be able to access it without some form of authentication and authorisation mechanism. 
 
 
-
 ## Potential Bugs
 
 - GET instructions - Gramatical error: '...and that ensure that...'
 - GET user - Incorrect data type returned - 'Latitude' and 'Longitude' are returned as a number for most users but as a string for others. This can be seen on the user with the id: '3'. This is likely to cause the consumer of the API to throw an exception when it attempts to parse the value. This causes the schema test to fail in  'get_users_tests.js'
 - GET user - Missing key/value pair - If I run a query for a single user, I recieve the key - 'city' plus a value. Given all other data for the user is returned, this suggests it should also be returned in the GET user call. 
 - All - I can query the API over HTTP. 
+
+## Tests Tech Stack
+
+The tests are written in Javscript using a library called 'Chakram' to handle making the HTTP requests. Mocha is used as the test runner, with 'Chai' used for the assertions library. A JSON validator library is used to validate all the JSON responses against the v4 standard.
+
+If you wish to run the tests you will require the 'npm' package manager.
+
+1. Clone the respoitory local
+2. Navigate to the root folder of the project in a terminal window and type 'npm install'. This will install all required dependencies
+3. Once it has finished, you can run the tests using the command 'npm test'.
