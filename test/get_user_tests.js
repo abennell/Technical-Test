@@ -7,7 +7,7 @@ var chakram = require('chakram'),
 describe("GET User/{id} API End point tests", function() {
     var response;
     before(function() {
-        response = chakram.get(config.baseUrl + '/user/1')
+        response = chakram.get(config.baseUrl + '/user/3')
     })
 
     //HTTP Code Response test
@@ -41,7 +41,8 @@ describe("GET User/{id} API End point tests", function() {
         return expect(response).and.to.not.have.header('X-Powered-By');
     })
 
-    //Response body tests
+    //Response body tests - Depending on the user that was selected, this could either pass or fail due to the bug identified with the inconsistent data types for lat and long. 
+    //I have chosen a user where it will fail because of this so that when it is resolved, this test will also pass. 
     it('should match the schema', function () {
         return expect(response).to.have.schema(userModel.fullSchema)
     })
@@ -53,14 +54,14 @@ describe("GET User/{id} API End point tests", function() {
     //Check the data of the first user returned is correct
     it('should return a user with the correct data', function() {
         return expect(response).to.have.json(function (responseObj){
-            expect(responseObj.id).to.equal(1)
-            expect(responseObj.first_name).to.equal('Maurise')
-            expect(responseObj.last_name).to.equal('Shieldon')
-            expect(responseObj.email).to.equal('mshieldon0@squidoo.com')
-            expect(responseObj.ip_address).to.equal('192.57.232.111')
-            expect(responseObj.latitude).to.equal(34.003135)
-            expect(responseObj.longitude).to.equal(-117.7228641)
-            expect(responseObj.city).to.equal('Kax')
+            expect(responseObj.id).to.equal(3)
+            expect(responseObj.first_name).to.equal('Meghan')
+            expect(responseObj.last_name).to.equal('Southall')
+            expect(responseObj.email).to.equal('msouthall2@ihg.com')
+            expect(responseObj.ip_address).to.equal('21.243.184.215')
+            expect(responseObj.latitude).to.equal(15.45033)
+            expect(responseObj.longitude).to.equal(44.12768)
+            expect(responseObj.city).to.equal('Qaryat al Qābil')
         })
     })
 
@@ -81,6 +82,12 @@ describe("GET User/{id} API End point tests", function() {
         //HTTP Code Response test
         it("should return a 404 response when I make a request with a user id that doesnt exist", function () {
             var response = chakram.get(config.baseUrl + 'user/10000')
+            return expect(response).to.have.status(404)
+        })
+
+         //HTTP Code Response test
+         it("should return a 404 response when I make a request without a user id", function () {
+            var response = chakram.get(config.baseUrl + 'user/')
             return expect(response).to.have.status(404)
         })
 

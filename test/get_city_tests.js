@@ -70,6 +70,13 @@ describe("GET City/{city}/users API End point Positive tests", function() {
     })
 
 
+    it('should allow a city name containing spaces and special characters', function () {
+    var apiResponse = chakram.get(config.baseUrl + 'city/Qaryat\ al\ Q\ābil/users')
+    mLog.log(apiResponse)
+      return expect(apiResponse).to.have.status(200).and.to.have.schema(userModel.partialSchema)
+
+    })
+
 })
 
 describe('GET City/{city}/users API End point negative tests', function () {
