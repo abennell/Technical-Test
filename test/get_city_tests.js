@@ -12,20 +12,13 @@ describe("GET City/{city}/users API End point Positive tests", function() {
     })
 
     //HTTP Code Response test
-     it("should return a 404 response when I make a request with an invalid city name", function () {
-        var apiResponse = chakram.get(config.baseUrl + 'city/1234/users')
-        return expect(apiResponse).to.have.status(404)
-    })
-
-
-    //HTTP Code Response test
     it("should return a 200 response when I make a request", function () {
             return expect(response).to.have.status(200)
     })
 
     //Response headers test
     it('should return with a connection header', function () {
-        return expect(response).and.to.have.header('connection', 'keep-alive');
+        return expect(response).and.to.have.header('connection');
     })
 
     it('should return with a content-type header', function () {
@@ -45,13 +38,13 @@ describe("GET City/{city}/users API End point Positive tests", function() {
         return expect(response).and.to.have.header('via', '1.1\ vegur');
     })
 
-    it('should not contain a X-Powered-By header', function() {
+    it('should not contain an X-Powered-By header', function() {
         return expect(response).and.to.not.have.header('X-Powered-By');
     })
 
     //Response body tests
     it('should match the schema', function () {
-        return expect(response).to.have.schema(userModel.fullSchema)
+        return expect(response).to.have.schema(userModel.partialSchema)
     })
     
     it('should return a single user',function () {
@@ -71,6 +64,7 @@ describe("GET City/{city}/users API End point Positive tests", function() {
         })
     })
 
+    //Performance test
     it('should allow checking maximum response time', function () {
         return expect(response).to.have.responsetime(500);
     })
@@ -81,9 +75,15 @@ describe("GET City/{city}/users API End point Positive tests", function() {
 describe('GET City/{city}/users API End point negative tests', function () {
 
     //HTTP Code Response test
-    it("should return a 500 response when I make a request with an invalid city name", function () {
+    it("Shouldn't throw an exception when I enter an invalid data type for the city name", function () {
         var response = chakram.get(config.baseUrl + 'city/1234/users')
-        return expect(response).to.have.status(500)
+        return expect(response).to.have.status(200)
+    })
+
+      //HTTP Code Response test
+      it("Shouldn't throw an exception when I enter an invalid city name", function () {
+        var response = chakram.get(config.baseUrl + 'city/abcd/users')
+        return expect(response).to.have.status(200)
     })
 
 })

@@ -17,7 +17,7 @@ describe("GET Users API End point tests", function() {
 
     //Response headers test
     it('should return with a connection header', function () {
-        return expect(response).and.to.have.header('connection', 'keep-alive');
+        return expect(response).and.to.have.header('connection');
     })
 
     it('should return with a content-type header', function () {
@@ -44,7 +44,7 @@ describe("GET Users API End point tests", function() {
 
     //Response body tests
     it('should match the schema', function () {
-        return expect(response).to.have.schema(userModel.schema)
+        return expect(response).to.have.schema(userModel.partialSchema)
     })
     
     it('should return 1000 users',function () {
@@ -64,6 +64,7 @@ describe("GET Users API End point tests", function() {
         })
     })
 
+    //Performance test
     it("should allow checking maximum response time", function () {
         return expect(response).to.have.responsetime(500);
     })
