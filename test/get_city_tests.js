@@ -4,11 +4,19 @@ var mLog = require('mocha-logger')
 var chakram = require('chakram'),
     expect = chakram.expect;
 
-describe("GET Users API End point tests", function() {
+    //Positive Tests
+describe("GET City/{city}/users API End point Positive tests", function() {
     var response;
     before(function() {
-        response = chakram.get(config.baseUrl + '/users')
+        response = chakram.get(config.baseUrl + 'city/Kax/users')
     })
+
+    //HTTP Code Response test
+     it("should return a 404 response when I make a request with an invalid city name", function () {
+        var apiResponse = chakram.get(config.baseUrl + 'city/1234/users')
+        return expect(apiResponse).to.have.status(404)
+    })
+
 
     //HTTP Code Response test
     it("should return a 200 response when I make a request", function () {
@@ -41,14 +49,13 @@ describe("GET Users API End point tests", function() {
         return expect(response).and.to.not.have.header('X-Powered-By');
     })
 
-
     //Response body tests
     it('should match the schema', function () {
-        return expect(response).to.have.schema(userModel.schema)
+        return expect(response).to.have.schema(userModel.fullSchema)
     })
     
-    it('should return 1000 users',function () {
-        return expect(response).to.have.schema({minItems: 1000, maxItems: 1000})
+    it('should return a single user',function () {
+        return expect(response).to.have.schema({minItems: 2, maxItems: 2})
     })
 
     //Check the data of the first user returned is correct
@@ -64,9 +71,19 @@ describe("GET Users API End point tests", function() {
         })
     })
 
-    it("should allow checking maximum response time", function () {
+    it('should allow checking maximum response time', function () {
         return expect(response).to.have.responsetime(500);
     })
 
+
+})
+
+describe('GET City/{city}/users API End point negative tests', function () {
+
+    //HTTP Code Response test
+    it("should return a 500 response when I make a request with an invalid city name", function () {
+        var response = chakram.get(config.baseUrl + 'city/1234/users')
+        return expect(response).to.have.status(500)
+    })
 
 })

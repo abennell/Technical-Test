@@ -22,12 +22,16 @@ I asked these questions in a response to the technical test but given the timesc
 ## Additional Questions/Observations
 
 
+- Missing API endpoint: Should I wish to query the 'GET /city/{city}/user' endpoint, as a consumer of the API, I would have to query each user individually to build up a city list. This is inefficient, providing a GET City end point which returned a list of all cities would be useful. 
 - Is it the intended behaviour for the GET ‘city’ api endpoint to accept a string rather than an ID for the 'city' parameter? It seems inconsistent to use an ID to identify a user for the 'GET User' API end point but a string to identify the city in the 'GET City'. If the API is returning international users, it's possible we could be retrieving users for the wrong city, in the wrong country.
 - Is it the intended behaviour for the API to return user data without being authenticated? Typically, Personal Data is subejct to increased levels of protection and it's unusual to be able to access it without some form of authentication and authorisation mechanism. 
+
 
 
 ## Potential Bugs
 
 - GET instructions - Gramatical error: '...and that ensure that...'
 - GET user - Incorrect data type returned - 'Latitude' and 'Longitude' are returned as a number for most users but as a string for others. This can be seen on the user with the id: '3'. This is likely to cause the consumer of the API to throw an exception when it attempts to parse the value. This causes the schema test to fail in  'get_users_tests.js'
-- GET user - Missing key/value pair - If I run a query for a single user, I recieve the key - 'city' plus a value. Given all other data for the user is returned, this suggests it should also be returned in the GET user call. This will also cause the schema test to fail.
+- GET user - Missing key/value pair - If I run a query for a single user, I recieve the key - 'city' plus a value. Given all other data for the user is returned, this suggests it should also be returned in the GET user call. 
+- GET city/{city}/user - Doesnt return a HTTP 404 response code when entering an invalid city name such as '1234'
+- All - I can query the API over HTTP. 

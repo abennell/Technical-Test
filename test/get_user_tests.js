@@ -4,10 +4,10 @@ var mLog = require('mocha-logger')
 var chakram = require('chakram'),
     expect = chakram.expect;
 
-describe("GET Users API End point tests", function() {
+describe("GET User/{id} API End point tests", function() {
     var response;
     before(function() {
-        response = chakram.get(config.baseUrl + '/users')
+        response = chakram.get(config.baseUrl + '/user/1')
     })
 
     //HTTP Code Response test
@@ -42,13 +42,14 @@ describe("GET Users API End point tests", function() {
     })
 
 
+
     //Response body tests
     it('should match the schema', function () {
         return expect(response).to.have.schema(userModel.schema)
     })
     
-    it('should return 1000 users',function () {
-        return expect(response).to.have.schema({minItems: 1000, maxItems: 1000})
+    it('should return a single user',function () {
+        return expect(response).to.have.schema({minItems: 1, maxItems: 1})
     })
 
     //Check the data of the first user returned is correct
@@ -61,6 +62,7 @@ describe("GET Users API End point tests", function() {
             expect(responseArray[0].ip_address).to.equal('192.57.232.111')
             expect(responseArray[0].latitude).to.equal(34.003135)
             expect(responseArray[0].longitude).to.equal(-117.7228641)
+            expect(responseArray[0].city).to.equal('Kax')
         })
     })
 
