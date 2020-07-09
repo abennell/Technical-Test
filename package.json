@@ -1,0 +1,24 @@
+{
+  "name": "technical-test",
+  "version": "1.0.0",
+  "description": "A series of API tests written for the BDPTS technical test",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "devDependencies": {
+    "chakram": "1.5.0",
+    "mocha": "8.0.1",
+    "mocha-logger": "1.0.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://abennell@github.com/abennell/Technical-Test.git"
+  },
+  "author": "Alexander Bennell",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abennell/Technical-Test/issues"
+  },
+  "homepage": "https://github.com/abennell/Technical-Test#readme"
+}
