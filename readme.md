@@ -11,6 +11,13 @@ It is my technical opinion that the swagger documentation provided doesnt provid
     - Are these designed to be run by a non-technical member of staff?
     - Who will be maintaining them and what is their skill set?
 
+I asked these questions in a response to the technical test but given the timescales for returning it, and not having had a response, I have put together a set of tests written in JS, based on the following assumptions:
+
+- Each API end point is returning the expected set of results and each JSON object returned meets the expected data contract in terms of required key/value pairs and their expected type.
+- Each API end point returns the same set of results each time it is called
+- The 'GET instructions' API end point is out of scope and is only intended to provide the instructions for this technical test. 
+- The response header values for 'server' and 'via' always return the same value.
+- The language and tools used to complete the test are left to my discretion.
 
 ## Additional Questions/Observations
 
@@ -21,5 +28,6 @@ It is my technical opinion that the swagger documentation provided doesnt provid
 
 ## Potential Bugs
 
-- GET USER - 'Latitude' is returned as a number for most users but as a string for others. This is likely to cause the consumer of the API to throw an exception when it attempts to parse the value.
-
+- GET instructions - Gramatical error: '...and that ensure that...'
+- GET user - Incorrect data type returned - 'Latitude' and 'Longitude' are returned as a number for most users but as a string for others. This can be seen on the user with the id: '3'. This is likely to cause the consumer of the API to throw an exception when it attempts to parse the value. This causes the schema test to fail in  'get_users_tests.js'
+- GET user - Missing key/value pair - If I run a query for a single user, I recieve the key - 'city' plus a value. Given all other data for the user is returned, this suggests it should also be returned in the GET user call. This will also cause the schema test to fail.
